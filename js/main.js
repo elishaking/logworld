@@ -3,11 +3,20 @@ const MQ = MathQuill.getInterface(2);
 
 const answerSpan = document.getElementById("math");
 // @ts-ignore
-const answerMathField = MQ.MathField(answerSpan, {
+const mathInput = MQ.MathField(answerSpan, {
   handlers: {
     edit: () => {
-      const enteredMath = answerMathField.latex(); // Get entered math in LaTeX format
-      console.log(enteredMath);
+      const enteredMath = mathInput.latex();
+      //   console.log(enteredMath);
     },
   },
 });
+
+mathInput.cmd("log");
+mathInput.cmd("(");
+
+answerSpan.onkeypress = (e) => {
+  if (e.keyCode === 13) {
+    console.log(mathInput.latex());
+  }
+};
