@@ -79,6 +79,20 @@ button:active {
   animation: loading 0.7s ease-in-out infinite forwards;
 }
 
+#answer {
+  font-size: 3em;
+  font-family: sans-serif;
+  margin-top: 1em;
+}
+
+#answer::before {
+  content: "answer = ";
+  font-size: 0.7em;
+  font-weight: bold;
+  word-break: break-word;
+  max-width: 80vw;
+}
+
 @keyframes loading {
   0% {
     width: 3em;

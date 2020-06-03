@@ -1,6 +1,7 @@
 const state = {
   calculating: false,
   error: "",
+  answer: "",
 };
 
 // @ts-ignore
@@ -65,13 +66,19 @@ const calculateLog = () => {
       console.log(data);
       setState({
         calculating: false,
+        answer: data.result,
       });
     });
 };
 
 const errorDiv = document.getElementById("error");
 const calculatingDiv = document.getElementById("calculating");
-const setState = ({ calculating = undefined, error = undefined }) => {
+const answerDiv = document.getElementById("answer");
+const setState = ({
+  calculating = undefined,
+  error = undefined,
+  answer = undefined,
+}) => {
   if (error !== undefined) {
     if (error === "") errorDiv.style.display = "none";
     else {
@@ -88,5 +95,9 @@ const setState = ({ calculating = undefined, error = undefined }) => {
       calculatingDiv.style.display = "none";
       calculate.style.display = "block";
     }
+  }
+
+  if (answer !== undefined) {
+    answerDiv.textContent = answer;
   }
 };
