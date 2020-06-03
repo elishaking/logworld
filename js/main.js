@@ -63,7 +63,6 @@ const calculateLog = () => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       setState({
         calculating: false,
         answer: data.result,
