@@ -37,19 +37,33 @@ const calculateLog = () => {
 
   // fix this
   const regex = /\\log_([0-9]+)\\left\(([0-9]+)\\right\)/;
-  const regex2 = /\\log_{([0-9]+)}\\left\(([0-9]+)\\right\)/;
+  const regex2 = /\\log_{([0-9]+| )}\\left\(([0-9]+)\\right\)/;
   const found = regex.exec(latex) || regex2.exec(latex);
+  console.log(found, latex);
+
   if (!found)
     return setState({
       error: "Please enter a valid log expression",
     });
 
-  mathInput.latex(found[0]);
+  mathInput.latex(found[0].replace(" ", "2"));
+  const base = found[1] === " " ? 2 : found[1];
 
   setState({
     error: "",
     calculating: true,
   });
+
+  const controller = new AbortController();
+  const signal = controller.signal;
+
+  const timeout = setTimeout(() => {
+    controller.abort();
+    setState({
+      calculating: false,
+      answer: Math.log(parseInt(found[2])) / Math.log(parseInt(found[1])),
+    });
+  }, 3000);
 
   const url =
     "https://us-central1-skyblazar-1578429246615.cloudfunctions.net/calculateLog";
@@ -57,12 +71,14 @@ const calculateLog = () => {
   fetch(url, {
     method: "POST",
     body: JSON.stringify({
-      base: found[1],
+      base,
       argument: found[2],
     }),
+    signal,
   })
     .then((res) => res.json())
     .then((data) => {
+      clearTimeout(timeout);
       setState({
         calculating: false,
         answer: data.result,
