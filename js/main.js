@@ -16,7 +16,14 @@ mathInput.cmd("log");
 mathInput.cmd("(");
 
 answerSpan.onkeypress = (e) => {
-  if (e.keyCode === 13) {
-    console.log(mathInput.latex());
-  }
+  if (e.keyCode === 13) calculateLog();
+};
+
+const calculate = document.getElementById("calculate");
+calculate.addEventListener("click", () => {
+  calculateLog();
+});
+
+const calculateLog = () => {
+  console.log(mathInput.latex());
 };
