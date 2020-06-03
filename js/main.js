@@ -18,7 +18,9 @@ const mathInput = MQ.MathField(answerSpan, {
 });
 
 mathInput.cmd("log");
-mathInput.cmd("(");
+mathInput.typedText("_");
+mathInput.keystroke("Right");
+mathInput.typedText("(");
 
 answerSpan.onkeypress = (e) => {
   if (e.keyCode === 13) calculateLog();
@@ -31,23 +33,31 @@ calculate.addEventListener("click", () => {
 
 const calculateLog = () => {
   const latex = mathInput.latex();
-  if (!latex.startsWith("\\log\\left(\\"))
+
+  // fix this
+  const regex = /\\log_([0-9]+)\\left\(([0-9]+)\\right\)/;
+  const regex2 = /\\log_{([0-9]+)}\\left\(([0-9]+)\\right\)/;
+  const found = regex.exec(latex) || regex2.exec(latex);
+  if (!found)
     return setState({
       error: "Please enter a valid log expression",
     });
+
+  mathInput.latex(found[0]);
 
   setState({
     error: "",
     calculating: true,
   });
+
   const url =
     "https://us-central1-skyblazar-1578429246615.cloudfunctions.net/calculateLog";
 
   fetch(url, {
     method: "POST",
     body: JSON.stringify({
-      base: 2,
-      argument: 2,
+      base: found[1],
+      argument: found[2],
     }),
   })
     .then((res) => res.json())
