@@ -15,12 +15,12 @@
 }
 
 small {
+  display: block;
   color: #9e9e9e;
   font-style: italic;
   margin-top: 2em;
   margin-bottom: 0.3em;
-  width: 80vw;
-  max-width: 400px;
+  width: 100%;
   text-align: end;
 }
 
@@ -30,14 +30,13 @@ span#math {
   outline: none;
   border: 1px solid #cccccc;
   border-radius: 5px;
-  margin-bottom: 1em;
-  width: 80vw;
-  max-width: 400px;
+  width: 100%;
   font-size: 1.3em;
   background-color: white;
 }
 
 button {
+  margin-top: 2em;
   padding: 0.7rem 1.3rem;
   outline: none;
   border: none;
@@ -57,4 +56,15 @@ button:hover {
 
 button:active {
   opacity: 1;
+}
+
+.calc {
+  width: 80vw;
+  max-width: 400px;
+}
+
+#error {
+  color: rgb(156, 26, 26);
+  width: 100%;
+  text-align: end;
 }

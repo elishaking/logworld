@@ -35,6 +35,10 @@ const calculateLog = () => {
     return setState({
       error: "Please enter a valid log expression",
     });
+
+  setState({
+    error: "",
+  });
   console.log(latex);
 };
 
