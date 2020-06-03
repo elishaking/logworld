@@ -22,6 +22,9 @@ mathInput.cmd("log");
 mathInput.typedText("_");
 mathInput.keystroke("Right");
 mathInput.typedText("(");
+mathInput.blur();
+
+answerSpan.click();
 
 answerSpan.onkeypress = (e) => {
   if (e.keyCode === 13) calculateLog();
@@ -39,7 +42,6 @@ const calculateLog = () => {
   const regex = /\\log_([0-9]+)\\left\(([0-9]+)\\right\)/;
   const regex2 = /\\log_{([0-9]+| )}\\left\(([0-9]+)\\right\)/;
   const found = regex.exec(latex) || regex2.exec(latex);
-  console.log(found, latex);
 
   if (!found)
     return setState({
