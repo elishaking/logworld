@@ -38,14 +38,15 @@ const calculateLog = () => {
 
   setState({
     error: "",
+    calculating: true,
   });
   console.log(latex);
 };
 
 const errorDiv = document.getElementById("error");
 const calculatingDiv = document.getElementById("calculating");
-const setState = ({ calculating = state.calculating, error = state.error }) => {
-  if (error != undefined) {
+const setState = ({ calculating = undefined, error = undefined }) => {
+  if (error !== undefined) {
     if (error === "") errorDiv.style.display = "none";
     else {
       errorDiv.style.display = "block";
@@ -53,7 +54,13 @@ const setState = ({ calculating = state.calculating, error = state.error }) => {
     }
   }
 
-  if (calculating != undefined) {
-    calculatingDiv.style.display = calculating ? "block" : "none";
+  if (calculating !== undefined) {
+    if (calculating) {
+      calculatingDiv.style.display = "block";
+      calculate.style.display = "none";
+    } else {
+      calculatingDiv.style.display = "none";
+      calculate.style.display = "block";
+    }
   }
 };
