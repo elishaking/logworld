@@ -1,3 +1,8 @@
+const state = {
+  calculating: false,
+  error: "",
+};
+
 // @ts-ignore
 const MQ = MathQuill.getInterface(2);
 
@@ -25,5 +30,26 @@ calculate.addEventListener("click", () => {
 });
 
 const calculateLog = () => {
-  console.log(mathInput.latex());
+  const latex = mathInput.latex();
+  if (!latex.startsWith("\\log\\left(\\"))
+    return setState({
+      error: "Please enter a valid log expression",
+    });
+  console.log(latex);
+};
+
+const errorDiv = document.getElementById("error");
+const calculatingDiv = document.getElementById("calculating");
+const setState = ({ calculating = state.calculating, error = state.error }) => {
+  if (error != undefined) {
+    if (error === "") errorDiv.style.display = "none";
+    else {
+      errorDiv.style.display = "block";
+      errorDiv.textContent = error;
+    }
+  }
+
+  if (calculating != undefined) {
+    calculatingDiv.style.display = calculating ? "block" : "none";
+  }
 };
