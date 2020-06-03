@@ -40,7 +40,23 @@ const calculateLog = () => {
     error: "",
     calculating: true,
   });
-  console.log(latex);
+  const url =
+    "https://us-central1-skyblazar-1578429246615.cloudfunctions.net/calculateLog";
+
+  fetch(url, {
+    method: "POST",
+    body: JSON.stringify({
+      base: 2,
+      argument: 2,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      setState({
+        calculating: false,
+      });
+    });
 };
 
 const errorDiv = document.getElementById("error");
